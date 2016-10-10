@@ -33,7 +33,7 @@ class rn4020:
     def broadcast(self,payload):
 
         #convert string, seperated by spaces, into hexadecimal
-
+        
 
         # first set the payload with "N,"
         # then set advertising with "A" along with speed
