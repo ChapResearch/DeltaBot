@@ -14,14 +14,14 @@ class OFile:
 		for f in files:
 			if isfile(join(os.path.dirname(os.path.abspath(__file__)), f)):
 				onlyfiles.append(f)
-                print(files)
 		for name in onlyfiles:
 			nameparts = name.split('-')
 			if(nameparts[0] == basename):
 				if(int(nameparts[1]) >biggest):
 					biggest = int(nameparts[1])
 		biggest = biggest+1	
-		self.fileW = open(basename + '-' + str(biggest), 'w')
+                self.name =  basename + '-' + str(biggest)
+		self.fileW = open(self.name, 'w')
 
 
 	#
