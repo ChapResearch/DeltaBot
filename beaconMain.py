@@ -12,22 +12,22 @@ print eNum
 
 outFile = OFile("beacon")
 
-
+msSpacing = 500
 
 for power in [0,1,2,3,4,5,6,7]:
     powerString = str(power)
     device.setPower(powerString)
     
     startTime = 0
-    targetTime = time.clock()*1000 + 200
+    targetTime = time.clock()*1000 + msSpacing
     
     for msg in range(0, msgCount):
         while time.clock()*1000 < targetTime:
             pass
-        targetTime = time.clock()*1000 + 200
+        targetTime = time.clock()*1000 + msSpacing
 
         device.broadcast(eNum, msg, startTime, power)
-        startTime += 200
+        startTime += msSpacing
 
         #              e  m  st  p
         outFile.write([eNum, msg, startTime, power])
