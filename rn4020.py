@@ -38,8 +38,15 @@ class rn4020:
         pass
 
     #
-    # broadcast() - Sends one message to the rn4020 with the given data, separated by spaces in
-    #               the form:  Magic# E# M# Sender-Time Sender-Power
+    # setPower() - Tells the rn4020 the power to transmit at
+    #
+    def setPower(self, powerString):
+        outString = "sp," + powerString
+        self.serial.write(outString)
+
+    
+    #
+    # broadcast() - Sends one message to the rn4020 with the given data
     #               e = experiment number between 0 and 255
     #               m = message number between 0 and 255
     #               st = sender time number between 0 and 65,535
@@ -47,7 +54,13 @@ class rn4020:
     #
     def broadcast(self, e, m, st, sp):
 
-        if (e < 0 or e > 255):
+        e = int(e)
+        m = int(m)
+        st = int(st)
+        sp = int(sp)
+        
+        #convert payload to a string (Magic# (C415AB), E#, M#, Sender-Time, Sender-Power), seperated by spaces, into hexadecimal
+        if e < 0 or e > 255:
             return False
         if (m < 0 or m > 255):
             return False
@@ -57,18 +70,20 @@ class rn4020:
             return False
 
         # message through the RN4020 need to be in HEX
+
         msg = rn4020.magicNum
         msg += convertToHex(e, 1)
         msg += convertToHex(m, 1)
         msg += convertToHex(st, 2)
         msg += convertToHex(sp, 1)
-        print msg.split()
+        print msg
 
         # first set the payload with "N,"
         # then set advertising with "A" along with speed
         outString = "Y\n"
 
         # Send N command (for sending data)
+
         outString = "N," + msg + "\n"
 
         #goes for one send, smallest possible time range
