@@ -69,6 +69,9 @@ class rn4020:
         if (sp < 0 or sp > 255):
             return False
 
+        self.serial.write("Y\n")            # turn off any previous broadcast
+        self.serial.readline()              # get the AOK
+
         # message through the RN4020 need to be in HEX
 
         msg = rn4020.magicNum
@@ -78,18 +81,11 @@ class rn4020:
         msg += convertToHex(sp, 1)
         print msg
 
-        # first set the payload with "N,"
-        # then set advertising with "A" along with speed
-        outString = "Y\n"
+        self.serial.write("N" + msg + "\n") # set-up the message to be broadcast
+        self.serial.readline()              # get the AOK
 
-        # Send N command (for sending data)
-
-        outString = "N," + msg + "\n"
-
-        #goes for one send, smallest possible time range
-        outString += "A,0000,0001\n"
-
-        self.serial.write(outString)
+        self.serial.write("A,0000,0001\n")  # start the broadcast with a "single message" config
+        self.serial.readline()              # get the AOK
 
         return True
 
