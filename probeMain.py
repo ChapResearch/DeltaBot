@@ -53,6 +53,7 @@ while True:
     sp = data[3]
     rp = data[4]
 
+    print str(eNum) + "," + str(mNum)
     outFile.write([probe,eNum,mNum,st,sp,rp])
 
 print
