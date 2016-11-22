@@ -11,6 +11,7 @@ print eNum
 
 
 outFile = OFile("beacon")
+print "Output file is: " + outFile.name
 
 msSpacing = 500
 
