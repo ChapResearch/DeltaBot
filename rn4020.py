@@ -81,8 +81,8 @@ class rn4020:
         msg += convertToHex(sp, 1)
         print msg
 
-        self.serial.write("N" + msg + "\n") # set-up the message to be broadcast
-        self.serial.readline()              # get the AOK
+        self.serial.write("N," + msg + "\n") # set-up the message to be broadcast
+        self.serial.readline()               # get the AOK
 
         self.serial.write("A,0000,0001\n")  # start the broadcast with a "single message" config
         self.serial.readline()              # get the AOK
