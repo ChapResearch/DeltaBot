@@ -114,7 +114,10 @@ class rn4020:
     #             it is returned as a list with: [E#, M#, ST, SP, RT, RP]
     #             command is called, it re-program
     def receive(self):
-        msg = self.serial.readline()               # this will wait, or "block", until a line comes in
+        try:
+            msg = self.serial.readline()               # this will wait, or "block", until a line comes in
+        except:
+            return False                               # returns False if interrupted by ^C
 
         # in one fell swoop, we check to see if it is a good message as extract
         # the data from the message. The following pattern extracts each component
